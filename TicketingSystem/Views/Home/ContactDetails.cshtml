@@ -1,0 +1,28 @@
+﻿@{
+    @using TicketingSystem.Controllers;
+
+    ViewData[HomeController.TitleKey] = "Contact Details";
+}
+
+@section PageCSS {
+    <link rel="stylesheet" href="~/css/ContactDetails.css" media="only screen and (min-width: 720px)" />
+}
+
+@section OutOfContentExtra {
+    <header>Additional Details</header>
+}
+
+@using (Html.BeginForm("UpdateStaffContactDetails", "Home", FormMethod.Post, new { @class = "container" }))
+{
+    <section id="inputArea">
+        <div class="InputField">
+            <label for="phoneNum">Phone Number</label>
+            <input type="tel" placeholder="Phone Number" name="phoneNum" />
+        </div>
+        <div class="InputField">
+            <label for="email">Email</label>
+            <input type="email" placeholder="Email" name="email" />
+        </div>
+    </section>
+    <button type="submit">Submit</button>
+}

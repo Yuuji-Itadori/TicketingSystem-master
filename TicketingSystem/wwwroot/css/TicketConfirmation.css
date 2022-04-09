@@ -1,0 +1,27 @@
+#content{
+    display: flex;
+    justify-content: center;
+    align-items:  center;
+    flex-direction: column;
+    height: 91.5vh;
+    background: var(--background);
+}
+#content h3{
+    display: block;
+    font-size: 3vh;
+    width: 100%;
+    margin: 0;
+    padding: 1%;
+    text-align: center;
+    color: var(--textColor);
+}
+#content div{
+    height: 50%;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items:  center;
+    flex-direction: column;
+    background: var(--hightlight);
+    border-radius: 50%;
+}

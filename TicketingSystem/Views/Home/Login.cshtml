@@ -1,0 +1,111 @@
+﻿@{
+    Layout = string.Empty;
+    @using TicketingSystem.Controllers;
+    
+    var loginErrorMessage = ViewData[HomeController.LoginErrorMessageKey];
+    var signupErrorMessage = ViewData[HomeController.SignupErrorMessageKey];
+    var slideClass = ((bool)ViewData[HomeController.LoadRightClassKey] ? "LeftSlide" : "RightSlide");
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="~/css/Login.css" media="only screen and (min-width: 720px)" />
+        <link id="theme" rel="stylesheet" href="">
+        <!--<link rel="stylesheet" href="~/css/Login-Mobile.css" />-->
+        <title>Login</title>
+    </head>
+    <body id="LoginPage">
+        <div id="background"> </div>
+        <header>
+            <h1 id="loginTitle">ABC Banking Tickets</h1>
+            <div id="darkModeDiv">
+                <label id="darkModeLabel" for="darkModeToggle">Dark Mode</label>
+                <label class="switch">
+                    <input type="checkbox" id="darkMode">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </header>
+        <div id="Slide">
+            <section id="LoginArea">
+                <div class="Left">
+                    <div class="Container">
+                        <div>
+                            <h2>Login</h2>
+                            @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+                            {
+                                <section>
+                                    <div class="InputField">
+                                        <input type="text" placeholder="Username" name="username" required/>
+                                        <label for="username">Username</label>
+                                    </div>
+                                    <div class="InputField">
+                                        <input type="password" placeholder="Password" name="password" required />
+                                        <label for="password">Password</label>
+                                    </div>
+                                </section>
+                                if (!string.IsNullOrEmpty(loginErrorMessage?.ToString()))
+                                { <p>@loginErrorMessage</p>}
+                                <button type="submit">Login</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="Right">
+                    <div class="Container">
+                        <div>
+                            <h2>Create Account</h2>
+                            @using (Html.BeginForm("Signup", "Home", FormMethod.Post))
+                            {
+                                <section>
+                                    <div class="InputField">
+                                        <input type="text" placeholder="Username" name="username" required />
+                                        <label for="username">Username</label>
+                                    </div>
+                                    <div class="InputField">
+                                        <input type="password" placeholder="Password" name="password" required />
+                                        <label for="password">Password</label>
+                                    </div>
+                                    <div class="InputField">
+                                        <input type="password" placeholder="Confirm Password" name="confirmPassword" required />
+                                        <label for="confirmPassword">Confirm Password</label>
+                                    </div>
+                                </section>
+                                if (!string.IsNullOrEmpty(signupErrorMessage?.ToString()))
+                                { <p>@signupErrorMessage</p>}
+                            <button type="submit">Create Account</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="ChangeLogin" class="@slideClass">
+                <div class="Left">
+                    <div class="Container white">
+                        <div>
+                            <h2>Login To Existing Account!</h2>
+                            <button>Login</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="Right">
+                    <div class="Container white">
+                        <div>
+                            <h2>Create a New Account!</h2>
+                            <p></p>
+                            <button>Create Account</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div id="Glass"></div>
+        </div>
+        <script type="application/javascript" src="~/js/DarkMode.js"> </script>
+        <script src="~/js/LoginSlider.js"></script>
+    </body>
+</html>

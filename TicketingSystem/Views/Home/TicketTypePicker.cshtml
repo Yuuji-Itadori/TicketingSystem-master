@@ -1,0 +1,43 @@
+﻿@{
+    @using TicketingSystem.Controllers;
+    ViewData[HomeController.TitleKey] = "Select Ticket Type";
+}
+
+@section PageCSS {
+    <link rel="stylesheet" href="~/css/TicketTypeSelector.css" media="only screen and (min-width: 720px)" />
+}
+
+@section OutOfContentExtra {
+    <!-- Outside of 'content' so that it appears as the header of the page -->
+    <h2>Ticket Selector</h2>
+}
+
+
+<!-- Contains all grid elements, sizes itself accordingly -->
+<div class="gridContainer">
+    <!-- Singular item within the grid, autosizes depending on the grid size -->
+    <a asp-action="TicketCreator" asp-route-chosenTicketTypeId="0" class="gridItem" title="Password Reset">
+        <img alt="Password Reset" src="~/imgs/resetPassword.svg">
+        <h3>Password Reset</h3>
+    </a>
+    <a asp-action="TicketCreator" asp-route-chosenTicketTypeId="1" class="gridItem" title="Access Control">
+        <img alt="Access Control" src="~/imgs/AccessControl.svg">
+        <h3>Access Control</h3>
+    </a>
+    <a asp-action="TicketCreator" asp-route-chosenTicketTypeId="2" class="gridItem" title="Procurement">
+        <img alt="Procurement" src="~/imgs/Procurement.svg">
+        <h3>Procurement</h3>
+    </a>
+    <a asp-action="TicketCreator" asp-route-chosenTicketTypeId="3" class="gridItem" title="Standard Services">
+        <img alt="Standard Services" src="~/imgs/StandardServices.svg">
+        <h3>Standard Services</h3>
+    </a>
+    <a asp-action="TicketCreator" asp-route-chosenTicketTypeId="4" class="gridItem" title="Non-Standard Services">
+        <img alt="Non-Standard Services" src="~/imgs/other.svg">
+        <h3>Non-Standard Services</h3>
+    </a>
+    <a asp-action="TicketCreator" asp-route-chosenTicketTypeId="5" class="gridItem" title="IT Support Services">
+        <img alt="IT Support Services" src="~/imgs/other.svg">
+        <h3>IT Support Services</h3>
+    </a>
+</div>

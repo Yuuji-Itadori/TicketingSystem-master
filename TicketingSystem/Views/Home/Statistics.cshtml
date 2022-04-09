@@ -1,0 +1,60 @@
+﻿@{
+    @using TicketingSystem.Controllers;
+
+    ViewData[HomeController.TitleKey] = "Statistics";
+}
+
+@section BeforeLoadScripts {
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+}
+
+@section PageCSS {
+    <link rel="stylesheet" href="~/css/Statistics.css" media="only screen and (min-width: 720px)" />
+}
+
+@section Scripts {
+    <script src="~/js/CollapsibleContainers.js"></script>    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+        $("#gridOne").load('@Url.Action("StatisticsSlideOne", "Home")');
+        $("#slideOne").click(function () {
+            var url = '@Url.Action("StatisticsSlideOne", "Home")';
+            $("#gridOne").load(url);
+        });
+        $("#slideTwo").click(function () {
+            var url = '@Url.Action("StatisticsSlideTwo", "Home")';
+            $("#gridTwo").load(url);
+        });
+    </script>
+}
+
+
+
+<section id="slideOne" class="collapsibleContainer active">
+    <div class="headerBar">
+        <h1>General Ticket Statistics</h1>
+    </div>
+    <div class="sectionContent">
+        <div id="gridOne" class="chartGrid">
+            <!-- Load StatisticsSlideOne.cshtml here -->
+        </div>
+    </div>
+</section>
+<section id="slideTwo" class="collapsibleContainer">
+    <div class="headerBar">
+        <h1>High Severity Tickets Statistics</h1>
+    </div>
+    <div class="sectionContent">
+        <div id="gridTwo" class="chartGrid">
+            <!-- Load StatisticsSlideTwo.cshtml here -->
+        </div>
+    </div>
+</section>
+<section id="slideThree" class="collapsibleContainer">
+    <div class="headerBar">
+        <h1>Custom Chart(s)</h1>
+    </div>
+    <div id="gridThree" class="sectionContent">
+        <!-- Load StatisticsSlideThree.cshtml here -->
+    </div>
+</section>

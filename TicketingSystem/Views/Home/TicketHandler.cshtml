@@ -1,0 +1,116 @@
+﻿@{
+    @using TicketingSystem.Controllers;
+
+    ViewData[HomeController.TitleKey] = "Ticket Handler";
+    var userTickets = (IEnumerable<(Ticket, string)>)ViewData[HomeController.UserTicketsKey];
+    var openTickets = (IEnumerable<(Ticket, string)>)ViewData[HomeController.OpenTicketsKey];
+    var allTickets = (IEnumerable<(Ticket, string)>)ViewData[HomeController.AllTicketsKey];
+}
+
+@section scripts {
+    <script src="~/js/CollapsibleContainers.js"></script>
+}
+
+@section PageCSS {
+    <link rel="stylesheet" href="/css/TicketHandler.css" media="only screen and (min-width: 720px)" />
+}
+
+
+<section class="collapsibleContainer active">
+    <div class="headerBar">
+        <h1>My Tickets</h1>
+    </div>
+    <div class="sectionContent">
+        <table class="sortable">
+            <tr>
+                <th>Summary</th>
+                <th>Type</th>
+                <th>Client</th>
+                <th>Submission Date and Time</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+            @foreach ((Ticket ticket, string staffName) in userTickets)
+            {
+                <tr>
+                    <td>@(string.IsNullOrEmpty(ticket.Summary) ? "N/A" : ticket.Summary)</td>
+                    <td>@ticket.TextForType</td>
+                    <td>@(string.IsNullOrEmpty(staffName) ? "N/A" : staffName)</td>
+                    <td>@ticket.SubmissionDate.ToString("dddd, dd MMMM yyyy hh:mm tt")</td>
+                    <td>@ticket.TextForStatus</td>
+                    <td>
+                        <a asp-action="TicketDetails" asp-route-ticketId="@ticket.ID">
+                            <p class="button">+</p>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</section>
+
+<div class="collapsibleContainer">
+    <div class="headerBar">
+        <h1>Inbound Tickets</h1>
+    </div>
+    <div class="sectionContent">
+        <table class="sortable">
+            <tr>
+                <th>Summary</th>
+                <th>Type</th>
+                <th>Client</th>
+                <th>Submission Date and Time</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+            @foreach ((Ticket ticket, string clientName) in openTickets)
+            {
+                <tr>
+                    <td>@(string.IsNullOrEmpty(ticket.Summary) ? "N/A" : ticket.Summary)</td>
+                    <td>@ticket.TextForType</td>
+                    <td>@(string.IsNullOrEmpty(clientName) ? "N/A" : clientName)</td>
+                    <td>@ticket.SubmissionDate.ToString("dddd, dd MMMM yyyy hh:mm tt")</td>
+                    <td>@ticket.TextForStatus</td>
+                    <td>
+                        <a asp-action="TicketDetails" asp-route-ticketId="@ticket.ID">
+                            <p class="button">+</p>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<div class="collapsibleContainer">
+    <div class="headerBar">
+        <h1>All Tickets</h1>
+    </div>
+    <div class="sectionContent">
+        <table class="sortable">
+            <tr>
+                <th>Summary</th>
+                <th>Type</th>
+                <th>Client</th>
+                <th>Submission Date and Time</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+            @foreach ((Ticket ticket, string staffName) in allTickets)
+            {
+                <tr>
+                    <td>@(string.IsNullOrEmpty(ticket.Summary) ? "N/A" : ticket.Summary)</td>
+                    <td>@ticket.TextForType</td>
+                    <td>@(string.IsNullOrEmpty(staffName) ? "N/A" : staffName)</td>
+                    <td>@ticket.SubmissionDate.ToString("dddd, dd MMMM yyyy hh:mm tt")</td>
+                    <td>@ticket.TextForStatus</td>
+                    <td>
+                        <a asp-action="TicketDetails" asp-route-ticketId="@ticket.ID">
+                            <p class="button">+</p>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

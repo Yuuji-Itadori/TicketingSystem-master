@@ -1,0 +1,280 @@
+:root {
+    --mainColor: #128754;
+    --hightlight: #1AB05C;
+    --background: #FFFFFF;
+    --textColor: #FFFFFF;
+}
+body {
+    margin: 0;
+    background: var(--hightlight);
+}
+/* Login Page --------------------------------------------------------- */
+#background {
+    position: absolute;
+    bottom: 0;
+    height: 90vh;
+    width: 100vw;
+    background: rgba(221, 221, 221, 0.3);
+}
+
+#LoginPage header {
+    position: relative;
+    color: var(--textColor);
+    background: var(--mainColor);
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+#LoginArea,
+#Slide,
+#ChangeLogin {
+    position: absolute;
+    width: 100%;
+    height: 90vh;
+    bottom: 0;
+}
+
+#Slide {
+    overflow: hidden;
+    transition: all 1s ease-in-out;
+}
+
+#ChangeLogin {
+    transition: all .5s ease-in-out;
+}
+
+    #ChangeLogin.RightSlide {
+        clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+    }
+
+    #ChangeLogin.LeftSlide {
+        clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+    }
+
+#Slide {
+    overflow: hidden;
+    transition: all 1s ease-in-out;
+}
+
+/* Change Login */
+#ChangeLogin {
+    background: var(--hightlight);
+}
+
+#Slide .Right,
+#Slide .Left {
+    height: 100%;
+    position: absolute;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#Slide .Right {
+    right: 0;
+}
+
+#Slide .Left {
+    left: 0;
+}
+
+#Slide .Container {
+    width: 45%;
+    height: 60%;
+    display: flex;
+    border-radius: 40px;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur( 17.5px );
+    -webkit-backdrop-filter: blur( 17.5px );
+    background: rgba( 255, 255, 255, 0.15 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+}
+
+    #Slide .Container .div {
+        width: 80%;
+    }
+
+#Glass {
+    height: 100%;
+    width: 20%;
+    position: absolute;
+    left: 40%;
+    background: rgba( 255, 255, 255, 0.00 );
+    backdrop-filter: blur( 20.0px );
+    -webkit-backdrop-filter: blur( 20.0px );
+    border-radius: 10px;
+}
+
+#Slide .Container h2 {
+    color: var(--textColor);
+    font: 'Alegreya' 40px;
+    font-size: 3vh;
+    position: absolute;
+    top: 2%;
+}
+
+#Slide .Container div {
+    height: 85%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* Input Boxes ------------------------------------------------ */
+#Slide .InputField {
+    position: relative;
+    padding: 15px 0 0;
+    margin-top: 10px;
+}
+
+.InputField input {
+    outline: 0;
+    border: 0;
+    width: 100%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid gray;
+    font-size: 2vh;
+    background: rgba(104, 104, 104, 0.329);
+    padding: 7px;
+    transition: all 0.2 ease-in-out;
+}
+
+    .InputField input::placeholder {
+        color: transparent;
+    }
+
+.InputField label {
+    position: absolute;
+    top: -20%;
+    left: 0;
+    display: block;
+    transition: 0.2ms;
+    font-size: 2vh;
+    color: var(--hightlight);
+}
+
+.InputField input:focus {
+    padding-bottom: 6px;
+    font-weight: 40;
+    border-width: 5px;
+    border-image: linear-gradient(to right, --mainColor,--hightlight);
+    border-image-slice: 1;
+    transition: all 0.2 ease-in-out;
+}
+
+/* ------------------------------------------------------------ */
+#Slide .Container button {
+    position: absolute;
+    bottom: 6%;
+    left: 24%;
+    margin: auto;
+    font-size: 2.5vh;
+    width: 50%;
+    height: 12%;
+    /* background: rgba(146, 209, 162, 0.65); */
+    background: rgb(231, 235, 232, 0.5);
+    /* box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 ); */
+
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 40px;
+    transition: all .4s ease-in-out;
+    border: none;
+}
+
+    #Slide .Container button:hover {
+        width: 70%;
+        left: 14%;
+        color: var(--textColor);
+        background: var(--mainColor);
+        box-shadow: 0px 5px #9292926c;
+        transform: translateY(-5px);
+        transition: all .4s ease-in-out;
+    }
+/* -------------------------------------------------------------------- */
+
+/* Dark Mode Stuff -------------------------------------------------------------------- */
+#darkModeDiv {
+    top: 0;
+    right: 0;
+    width: 20%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+}
+
+#darkModeLabel {
+    margin-right: 10px;
+    font-size: 1.5vh;
+}
+/* Dark Mode Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--background);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: var(--hightlight);
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+input:checked + .slider {
+    background-color: var(--hightlight);
+}
+
+    input:checked + .slider:before {
+        background-color: var(--mainColor);
+    }
+
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--hightlight);
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+    .slider.round:before {
+        border-radius: 50%;
+    }

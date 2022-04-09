@@ -1,0 +1,101 @@
+﻿@{
+    @using TicketingSystem.Controllers;
+    ViewData[HomeController.TitleKey] = "TicketViewer";
+    Ticket ticket = (Ticket)ViewData[HomeController.TicketDetailsKey];
+    string ticketHandlerName = ViewData[HomeController.HandlerNameKey].ToString();
+    string ticketClientName = ViewData[HomeController.TicketClientNameKey].ToString();
+    string ticketServiceName = ViewData[HomeController.ServiceNameKey].ToString();
+    string ticketLocationName = ViewData[HomeController.LocationNameKey].ToString();
+    string notes = ViewData[HomeController.TicketNotesKey].ToString();
+    const string reachClass = " reached";
+    const string currentClass = "  current";
+}
+
+@section PageCSS {
+    <link rel="stylesheet" href="~/css/TicketViewer.css" media="only screen and (min-width: 720px)" />
+}
+
+@section OutOfContentExtra {
+    <header>@ticket.TextForType, @ticket.ID</header>
+}
+
+
+<section id="TicketDetails">
+    <div id="defaultDetails">
+        <div class="container">
+            <div class="detail">
+                <h3>Severity:</h3>
+                <p>@(ticket.TextForSeverity == string.Empty? "N/A" : ticket.TextForSeverity)</p>
+            </div>
+            <div class="detail">
+                <h3>Submitted By:</h3>
+                <p>@(ticketClientName == string.Empty? "N/A" : ticketClientName)</p>
+            </div>
+            <div class="detail">
+                <h3>Location:</h3>
+                <p>@(ticketLocationName == string.Empty? "N/A" : ticketLocationName)</p>
+            </div>
+            <div class="detail">
+                <h3>Service:</h3>
+                <p>@(ticketServiceName == string.Empty? "N/A" : ticketServiceName)</p>
+            </div>
+            <div class="detail expandable">
+                <h3>Summary:</h3>
+                <p>@(ticket.Summary == string.Empty? "N/A" : ticket.Summary)</p>
+            </div>
+            <div class="detail expandable">
+                <h3>Details:</h3>
+                <p>@(ticket.Details == string.Empty? "N/A" : ticket.Details)</p>
+            </div>
+        </div>
+    </div>
+    <div id="additionalDetails">
+        <div id="additionalDetail">
+            <h3>Additional Info:</h3>
+            <p>
+                @foreach (string line in notes.Split("\n"))
+                {
+                    @line
+                    <br>
+                }
+            </p>
+            @using (Html.BeginForm("UpdateAdditionalInformation", "Home", FormMethod.Post))
+            {
+                <textarea name="additionalInformation"></textarea>
+                if (ticket.CurrentStatus == Ticket.Status.Resolved || ticket.CurrentStatus == Ticket.Status.Denied)
+                {
+                    <button disabled asp-action="UpdateAdditionalInformation" asp-route-ticketId="@ticket.ID">Update Additional Details</button>
+                }
+                else
+                {
+                    <button asp-action="UpdateAdditionalInformation" asp-route-ticketId="@ticket.ID">Update Additional Details</button>
+                }
+            } 
+        </div>
+        <div class="detail">
+            <h3>Assigned Handler:</h3>
+            <p>@ticketHandlerName</p>
+        </div>
+    </div>
+</section>
+<div id="ProgressBar">
+    <h2>Ticket Progress</h2>
+    <div class="progressBar">
+        <div class="progressStage@(ticket.CurrentStatus > Ticket.Status.Open? reachClass : (ticket.CurrentStatus == Ticket.Status.Open? currentClass : string.Empty))">
+            <p class="label">Open</p>
+            <div class="progressLine"></div>
+        </div>
+        <div class="progressStage@(ticket.CurrentStatus > Ticket.Status.Assigned? reachClass : (ticket.CurrentStatus == Ticket.Status.Assigned? currentClass : string.Empty))">
+            <p class="label">Assigned</p>
+            <div class="progressLine"></div>
+        </div>
+        <div class="progressStage@(ticket.CurrentStatus > Ticket.Status.Responded? reachClass : (ticket.CurrentStatus == Ticket.Status.Responded? currentClass : string.Empty))">
+            <p class="label">Responded</p>
+            <div class="progressLine"></div>
+        </div>
+        <div class="progressStage@(ticket.CurrentStatus == Ticket.Status.Resolved? currentClass : string.Empty)">
+            <p class="label">Completed</p>
+            <div class="progressLine"></div>
+        </div>
+    </div>
+</div>

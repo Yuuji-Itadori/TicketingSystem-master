@@ -1,0 +1,72 @@
+#content {
+    height: 87vh;
+    display: flex;
+    justify-content: center;
+}
+
+#container h2 {
+    font-size: 3.5vh;
+    margin: 1vh 0;
+}
+
+.gridContainer {
+    gap: 35px;
+    width: 90%;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.gridItem {
+    width: 20vw;
+    height: 100%;
+    margin: auto;
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+    border-radius: 60px;
+    border: 2px solid var(--textColor);
+    background: var(--mainColor);
+    transition: all .4s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .gridItem:hover {
+        transform: translateY(-1vh);
+        border: .7vh solid #e9b937;
+        box-shadow: 0px 1vh #9292926c;
+        transition: all .4s ease-in-out;
+    }
+
+    .gridItem:nth-child(2n) {
+        width: 25vw;
+        height: 100%;
+    }
+
+    .gridItem:nth-child(2n+1) {
+        background: var(--hightlight);
+    }
+
+    .gridItem h3 {
+        width: 100%;
+        bottom: 2%;
+        font-size: 3vh;
+        position: absolute;
+        color: var(--textColor);
+    }
+
+    .gridItem img {
+        position: relative;
+        width: 50%;
+    }
+    
+    .gridItem:nth-child(4) h3,
+    .gridItem:nth-child(5) h3,
+    .gridItem:nth-child(6) h3 {
+        bottom: 80%;
+    }

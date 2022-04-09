@@ -1,0 +1,141 @@
+﻿@{
+    @using TicketingSystem.Controllers;
+
+    var type = (Ticket.Type)ViewData[HomeController.TicketTypeNameKey];
+    var id = (int)ViewData[HomeController.TicketIDKey];
+    var severity = (Ticket.Severity)ViewData[HomeController.TicketSeverityKey];
+    var status = (Ticket.Status)ViewData[HomeController.TicketStatus];
+
+    string clientName = ViewData[HomeController.TicketClientNameKey].ToString();
+    string summary = ViewData[HomeController.TicketSummaryKey].ToString();
+    string details = ViewData[HomeController.TicketDetailsKey].ToString();
+    string notes = ViewData[HomeController.TicketNotesKey].ToString();
+    string serviceName = ViewData[HomeController.TicketServiceKey].ToString();
+    string locationName = ViewData[HomeController.TicketLocationKey].ToString();
+    string log = ViewData[HomeController.TicketLogKey].ToString();
+
+    bool isPrimaryUser = (bool)ViewData[HomeController.IsPrimaryUserKey];
+    bool isSecondaryUser = (bool)ViewData[HomeController.IsSecondaryUserKey];
+
+    bool isManager = (Staff.Type)ViewData[HomeController.UserTypeKey] == Staff.Type.Manager;
+}
+
+@section PageCSS {
+    <link type="text/css" rel="stylesheet" href="~/css/TicketDetails.css" media="only screen and (min-width: 720px)" />
+}
+
+@section OutOfContentExtra {
+    <!-- Outside of 'content' so that it appears as the header of the page -->
+    <header>Ticket ID: @id, @Ticket.GetTextForType(type)</header>
+}
+
+
+<section id="ProgressBar">
+    @if (status >= Ticket.Status.Open)
+    {<p class="stagePassed">Open</p> }
+    else
+    { <p>Open</p> }
+    @if (status >= Ticket.Status.Assigned)
+    {<p class="stagePassed">Assigned</p> }
+    else
+    { <p>Assigned</p> }
+    @if (status >= Ticket.Status.Responded)
+    {<p class="stagePassed">Responded</p> }
+    else
+    { <p>Responded</p> }
+    @if (status >= Ticket.Status.Resolved)
+    {<p class="stagePassed">Resolved</p> }
+    else
+    { <p>Resolved</p> }
+</section>
+<section id="onScreenButtons">
+    @if (status < Ticket.Status.Open && isManager)
+    {
+        <a class="button" asp-action="ApproveTicket" asp-route-ticketId="@id" asp-route-approvalState="@Ticket.Status.Open">Approve Ticket</a>
+        <a class="button" asp-action="ApproveTicket" asp-route-ticketId="@id" asp-route-approvalState="@Ticket.Status.Denied">Deny Ticket</a>
+    }
+    @if (status > Ticket.Status.Unapproved && status < Ticket.Status.Resolved && !isPrimaryUser && !isSecondaryUser)
+    {<a class="button" asp-action="AssignSelfToTicket" asp-route-ticketId="@id">Assign Myself To Ticket</a>}
+    @if (status > Ticket.Status.Open && status < Ticket.Status.Resolved)
+    {
+        <a class="button">Request More Infomation</a>
+        @if (isPrimaryUser && status != Ticket.Status.Resolved)
+        {<a class="button" asp-action="CompleteTicket" asp-route-ticketId="@id">Complete Ticket</a>}
+    }
+</section>
+<div id="detailsContainer">
+    <section id="Details">
+        <h2>Ticket Details</h2>
+        @if (severity != Ticket.Severity.None)
+        {
+            <div id="Severity" class="detail">
+                <h3>Severity</h3>
+                <p>@Ticket.GetTextForSeverity(severity)</p>
+            </div>
+        }
+        <div class="detail">
+            <h3>Client</h3>
+            <p>@clientName</p>
+        </div>
+        @if (!string.IsNullOrEmpty(locationName))
+        {
+            <div class="detail">
+                <h3>Location</h3>
+                <p>@locationName</p>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(serviceName))
+        {
+            <div class="detail">
+                <h3>Service</h3>
+                <p>@serviceName</p>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(summary))
+        {
+            <div class="detail">
+                <h3>Summary</h3>
+                <p>@summary</p>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(details))
+        {
+            <div class="detail">
+                <h3>Details</h3>
+                <p>@details</p>
+            </div>
+        }
+        </section>
+    <section id="AdditionalInfo">
+        <h2>Additional Information</h2>
+        <div class="detail">
+            <p>
+                @foreach (string line in notes.Split("\n"))
+                { 
+                    @line 
+                    <br>
+                }
+            </p>
+            @if (status > Ticket.Status.Denied && status < Ticket.Status.Resolved || isManager)
+            {
+                @using (Html.BeginForm("UpdateAdditionalInformation", "Home", FormMethod.Post))
+                {
+                    <textarea name="additionalInformation"></textarea>
+                    <button asp-action="UpdateAdditionalInformation" asp-route-ticketId="@id">Add Additional Information</button>
+                }
+            }
+        </div>
+    </section>
+    <section id="Log">
+        <h2>Log of Actions</h2>
+        <div class="detail">
+            <p>
+                @foreach (string line in log.Split("\n"))
+                {
+                    @line
+                    <br>
+                }
+            </p>
+        </div>
+    </section>
+</div>

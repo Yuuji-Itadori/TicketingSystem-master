@@ -1,0 +1,123 @@
+﻿@{
+    Layout = string.Empty;
+    @using TicketingSystem.Controllers;
+
+    var highSeverityTicketsPerMonth = (IEnumerable<(int MonthIndex, int Quantity)>)ViewData["HighSeverityPerMonth"];
+    var highSeverityCountPerType = (IEnumerable<(Ticket.Type TicketType, int Quantity)>)ViewData["HighSeverityCountPerType"];
+    var highSeverityAvgCompletionPerType = (IEnumerable<(Ticket.Type TicketType, double AverageCompletionTime)>)ViewData["HighSeverityAvgCompletionTimePerType"];
+    var averageCompletionTimePerSeverity = (IEnumerable<(Ticket.Severity SeverityLevel, double AverageCompletionTimeInHours)>)ViewData["AverageCompletionTimePerSeverity"];
+    var averageUnassignedTimePerSeverity = (IEnumerable<(Ticket.Severity SeverityLevel, double AverageTimeUnassignedInHours)>)ViewData["AverageUnassignedTimeInHoursPerSeverity"];
+}
+
+
+@for (int i = 1; i <= 7; i++)
+{
+    if (i == 1)
+    {<div class="canvasContainer" id="chart1"><div id="messageSlider"></div></div> }
+    else
+    { <div class="canvasContainer" id=@($"chart{i}")></div>}
+}
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    const chartGrid = document.querySelector('#slideTwo .chartGrid');
+    const charts = chartGrid.querySelectorAll('.canvasContainer');
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.setOnLoadCallback(() => {
+        // High Severity Tickets
+        {
+            var monthNames = @Html.Raw(Json.Serialize(highSeverityTicketsPerMonth.Select(r => HomeController.GetMonthNameFromIndex(r.MonthIndex).ToArray())));
+            var monthCounts = @Html.Raw(Json.Serialize(highSeverityTicketsPerMonth.Select(r => r.Quantity).ToArray()));
+
+            var content = [['Month', 'Tickets Created']];
+            for (var i = 0; i < monthNames.length; i++) {
+                content.push([monthNames[i].join(''), monthCounts[i]]);
+            }
+            var data = google.visualization.arrayToDataTable(content);
+            var options = {
+                title: 'High Severity Tickets This Year',
+                legend: { position: 'bottom' }
+            };
+            createColumnChart(data, options, charts[1]);
+        }
+
+        // Severity Type Total
+        {
+            var ticketNames = @Html.Raw(Json.Serialize(highSeverityCountPerType.Select(r => Ticket.GetTextForType(r.TicketType).ToArray())));
+            var ticketCounts = @Html.Raw(Json.Serialize(highSeverityCountPerType.Select(r => r.Quantity).ToArray()));
+
+            var content = [['Ticket Type', 'Total']];
+            for (var i = 0; i < ticketNames.length; i++) {
+                content.push([ticketNames[i].join(''), ticketCounts[i]]);
+            }
+            var data = google.visualization.arrayToDataTable(content);
+            var options = {
+                title: 'High Severity Count Per Type'
+            };
+            createPieChart(data, options, charts[2]);
+        }
+
+        // Average Completion Time per Type
+        {
+            var ticketNames = @Html.Raw(Json.Serialize(highSeverityAvgCompletionPerType.Select(r => Ticket.GetTextForType(r.TicketType).ToArray())));
+            var averages = @Html.Raw(Json.Serialize(highSeverityAvgCompletionPerType.Select(r => r.AverageCompletionTime).ToArray()));
+
+            var content = [['Ticket Type', 'Average Hours to Complete']];
+            for (var i = 0; i < ticketNames.length; i++) {
+                content.push([ticketNames[i].join(''), averages[i]]);
+            }
+            var data = google.visualization.arrayToDataTable(content);
+            var options = {
+                title: 'High Severity Average Completion Time Per Ticket Type',
+                legend: { position: 'bottom' }
+            };
+            createLineChart(data, options, charts[4]);
+        }
+
+        // Average Completion Time per Severity
+        {
+            var severityNames = @Html.Raw(Json.Serialize(averageCompletionTimePerSeverity.Select(r => Ticket.GetTextForSeverity(r.SeverityLevel)).ToArray()));
+            var avgCompletionTimes = @Html.Raw(Json.Serialize(averageCompletionTimePerSeverity.Select(r => r.AverageCompletionTimeInHours).ToArray()));
+
+            var content = [['Ticket Type', 'Average Completion Time']];
+            for (var i = 1; i < severityNames.length; i++) {
+                content.push([severityNames[i], avgCompletionTimes[i]]);
+            }
+            var data = google.visualization.arrayToDataTable(content);
+            var options = {
+                title: 'Average Completion Time Per Severity Level',
+                legend: { position: 'bottom' }
+            };
+            createColumnChart(data, options, charts[5]);
+        }
+
+        // Average Time Un-assigned per Severity
+        {
+            var severityNames = @Html.Raw(Json.Serialize(averageUnassignedTimePerSeverity.Select(r => Ticket.GetTextForSeverity(r.SeverityLevel)).ToArray()));
+            var avgNonAssignedTimes = @Html.Raw(Json.Serialize(averageUnassignedTimePerSeverity.Select(r => r.AverageTimeUnassignedInHours).ToArray()));
+
+            var content = [['Ticket Type', 'Average Time Unassigned']];
+            for (var i = 1; i < severityNames.length; i++) {
+                content.push([severityNames[i], avgNonAssignedTimes[i]]);
+            }
+            var data = google.visualization.arrayToDataTable(content);
+            var options = {
+                title: 'Average Time Unassigned Per Severity Level',
+                legend: { position: 'bottom' }
+            };
+            createColumnChart(data, options, charts[6]);
+        }
+    });
+    function createColumnChart(data, options, location) {
+        var chart = new google.visualization.ColumnChart(location);
+        chart.draw(data, options);
+    }
+    function createPieChart(data, options, location) {
+        var chart = new google.visualization.PieChart(location);
+        chart.draw(data, options);
+    }
+    function createLineChart(data, options, location) {
+        var chart = new google.visualization.LineChart(location);
+        chart.draw(data, options);
+    }
+</script>

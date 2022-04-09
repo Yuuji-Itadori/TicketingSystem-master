@@ -1,0 +1,281 @@
+:root {
+    --mainColor: #128754;
+    --hightlight: #1AB05C;
+    --background: #FFFFFF;
+    --textColor: #FFFFFF;
+}
+*{
+    font-family: Calibri;
+}
+#navigation-panel {
+    background-color: var(--mainColor);
+    width: 15%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    z-index: 1;
+    user-select: none;
+}
+#user-profile {
+    margin-top: 20%;
+    margin-bottom: 30%;
+}
+#logo {
+    width: 70%;
+    height: auto;
+    border-radius: 50%;
+    display: block;
+    margin: auto;
+    margin-bottom: 20px;
+}
+#navigation-menu a {
+    width: 100%;
+    text-decoration: none;
+}
+#navigation-menu a h2:hover {
+    background-color: var(--background);
+    color: var(--hightlight);
+}
+#navigation-menu a h2 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+#container {
+    width: auto;
+    margin-left: 15%;
+}
+#content {
+    background-color: var(--background);
+}
+
+body {
+    background: var(--mainColor);
+    margin: 0;
+}
+h1 {
+    padding-bottom: 10px;
+}
+h1, h2 {
+    text-align: center;
+    color: var(--textColor);
+}
+footer {
+    position: relative;
+    background: var(--mainColor);
+    color: var(--textColor);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+p {
+    margin: 0;
+    margin-left: 10px;
+}
+
+
+
+/* Collapsible Containers --------------------------------------------- */
+/* Header */
+.collapsibleContainer .headerBar{
+    width: 100%;
+    height: 4vh;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    background: var(--hightlight);
+    transition: all 1s ease-in-out;
+    border-bottom: 2px solid var(--mainColor);
+}
+.collapsibleContainer.active .headerBar{
+    height: 6vh;
+    cursor: default;
+    transition: all 1s ease-in-out;
+    font-size: 35px;
+    border-bottom: none;
+}
+.collapsibleContainer h1{
+    font-size: 30px;
+    transition: all 1s ease-in-out;
+    user-select: none;
+}
+.collapsibleContainer.active h1{
+    font-size: 50px;
+    color: #F9BB3D;
+    text-decoration: underline;
+    transition: all 1s ease-in-out;
+}
+/* Content */
+.collapsibleContainer .sectionContent{
+    height: 0;
+    overflow-y: hidden;
+    margin-right: 10px;
+    background: var(--background);
+    transition: all 1s ease-in-out;
+}
+.collapsibleContainer.active .sectionContent{
+    height: 83.25vh;
+    overflow-y: scroll;
+    transition: all 1s ease-in-out;
+}
+/* Scroll Bar */
+.collapsibleContainer.active .sectionContent::-webkit-scrollbar {
+    width: 20px;
+}
+.collapsibleContainer.active .sectionContent::-webkit-scrollbar-track {
+    border-radius: 10px;
+    border: solid 1.5px var(--hightlight);
+}
+.collapsibleContainer.active .sectionContent::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: var(--mainColor);
+}
+/* -------------------------------------------------------------------- */
+
+/* Table -------------------------------------------------------------- */
+table{
+    width: 90%;
+    margin: auto;
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+    border-radius: 25px;
+}
+table,
+tr, td,
+th{
+    text-align: center;
+    border-collapse: collapse;
+}
+tr:nth-child(1) th{
+    /* background-color: #0AC8F0; */
+    background-color: var(--mainColor);
+    color: white;
+}
+tr{
+    font-size: 20px;
+    height: 70px;
+    /* background-color: #BAE9F0; */
+    background-color: #EDE9D6;
+}
+tr:nth-child(2n+1){
+    /* background-color: #1BF0DD; */
+    background-color: #dedede;
+}
+
+th{
+    user-select: none;
+    width: 33vw;
+}
+/* -------------------------------------------------------------------- */
+td button{
+    padding: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 100px;
+    transition: all .2s ease-in-out;
+    border: 2px solid var(--mainColor);
+}
+td button:hover{
+    transform: translateY(-5px);
+    background: var(--hightlight);
+    color: var(--textColor);
+    box-shadow: 0px 5px #888888;
+    border-color: var(--hightlight);
+    transition: all .2s ease-in-out;
+}
+    
+
+table tr:nth-child(1) th:first-child {
+    border-top-left-radius: 25px;
+}
+table tr:nth-child(1) th:last-child {
+    border-top-right-radius: 25px;
+}
+table tr:last-child td:first-child {
+    border-bottom-left-radius: 25px;
+}
+table tr:last-child td:last-child {
+    border-bottom-right-radius: 25px;
+}
+
+/* Dark Mode Stuff -------------------------------------------------------------------- */
+#darkModeDiv{
+    top: 0;
+    right: 0;
+    width: 20%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+}
+#darkModeLabel{
+    margin-right: 10px;
+    font-size: 1.5vh;
+}
+/* Dark Mode Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--background);
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--hightlight);
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  input:checked + .slider {
+    background-color: var(--hightlight);
+  }
+  input:checked + .slider:before {
+    background-color: var(--mainColor);
+  }
+  input:focus + .slider {
+    box-shadow: 0 0 1px var(--hightlight);
+  }
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  .slider.round {
+    border-radius: 34px;
+  }
+  .slider.round:before {
+    border-radius: 50%;
+  }
+header {
+    width: 100%;
+    text-align: center;
+    font-size: 2vh;
+    color: var(--textColor);
+    background: var(--mainColor);
+    padding: 1vh 0;
+}

@@ -1,0 +1,25 @@
+@{
+    @using TicketingSystem.Controllers;
+    ViewData[HomeController.TitleKey] = "Ticket Confirmed";
+    var ticketType = ViewData[HomeController.TicketTypeNameKey];
+    int ticketStatusId = (int)ViewData[HomeController.TicketStatusIdKey];
+    string[] ticketResponse =(string[])ViewData[HomeController.TicketResponseTimeKey];
+}
+
+@section PageCSS {
+    <link type="text/css" rel="stylesheet" href="~/css/TicketConfirmation.css" media="only screen and (min-width: 720px)" />
+}
+
+@section OutOfContentExtra {
+    <header>Great Success!</header>
+}
+
+<div>
+    <h3>Your @ticketType has been created!</h3>
+    <h3>You should receive a response within @ticketResponse[0] @ticketResponse[1].</h3>
+    <div>
+        <a asp-action="MyTickets" asp-route-activeTab="@ticketStatusId">
+            <p class="button">Go to MyTickets</p>
+        </a>
+    </div>
+</div>

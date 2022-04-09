@@ -1,0 +1,92 @@
+.chartGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) 25%;
+    grid-auto-rows: 30vh;
+    row-gap: 3%;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    align-items: center;
+    justify-items: center;
+    grid-template: 'chart1 chart2 chart2 chart2'
+        'chart3 chart3 chart4 chart5'
+        'chart3 chart3 chart6 chart7';
+}
+.canvasContainer{
+    border: .3vh solid gold;
+    background: whitesmoke;
+    overflow: hidden;
+    position: relative;
+}
+.collapsibleContainer.active .sectionContent{
+    overflow-y: hidden;
+}
+
+.chartGrid .canvasContainer:nth-child(1) { grid-area: chart1; }
+.chartGrid .canvasContainer:nth-child(2) { grid-area: chart2; }
+.chartGrid .canvasContainer:nth-child(3) { grid-area: chart3; }
+.chartGrid .canvasContainer:nth-child(4) { grid-area: chart4; }
+.chartGrid .canvasContainer:nth-child(5) { grid-area: chart5; }
+.chartGrid .canvasContainer:nth-child(6) { grid-area: chart6; }
+.chartGrid .canvasContainer:nth-child(7) { grid-area: chart7; }
+
+.chartGrid .canvasContainer:nth-child(1),
+.chartGrid .canvasContainer:nth-child(2) {
+    position: relative;
+    transform: translateX(1.5%);
+}
+
+/* Message Slider */
+#messageSlider{
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    transition: all .5s ease-in-out;
+    bottom: 20%;
+    display: flex;
+}
+#messageSlider h3{
+    min-width: 20.33vw;
+}
+.chartGrid .canvasContainer:nth-child(1) {
+    position: relative;
+    overflow: hidden;
+}
+.chartGrid .canvasContainer:nth-child(1) h2 {
+    position: absolute;
+    top: 2%;
+    color: black;
+    font-size: 2.5vh;
+    width: 100%;
+    text-align: center;
+}
+.chartGrid .canvasContainer:nth-child(1) h3 {
+    position: relative;
+    display: inline-block;
+    color: black;
+    font-size: 2vh;
+    text-align: center;
+}
+
+#chart1,
+#chart4,
+#chart5,
+#chart6,
+#chart7{
+    width: 20.33vw;
+    height: 24.76vh;
+    max-width: 20.33vw;
+    max-height: 24.76vh;
+}
+#chart2{
+    width: 60.15vw;
+    height: 24.76vh;
+    max-width: 60.15vw;
+    max-height: 24.76vh;
+}
+#chart3{
+    width: 40vw;
+    height: 51.86vh;
+    max-width: 40vw;
+    max-height: 51.86vh;
+}

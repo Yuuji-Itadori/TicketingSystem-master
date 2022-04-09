@@ -1,0 +1,153 @@
+h1{
+    font-size: 2vh;
+    margin-bottom: 0;
+    padding-bottom: 2vh;
+    background: var(--mainColor);
+}
+#content h2{
+    background: var(--mainColor);
+    font-size: 2vh;
+    margin: 0;
+    padding: 1%;
+    color: var(--textColor);
+}
+#detailsContainer{
+    width: 76.5%;
+    height: 85vh;
+    overflow-y: scroll;
+}
+#detailsContainer::-webkit-scrollbar {
+    width: 20px;
+}
+#detailsContainer::-webkit-scrollbar-track {
+    border-radius: 10px;
+    border: solid 2px var(--mainColor);
+    background: var(--background);
+}
+#detailsContainer::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: var(--mainColor);
+}
+#ProgressBar{
+    width: 100%;
+    display: flex;
+    background: var(--background);
+}
+#ProgressBar p{
+    margin: 0;
+    font-size: 2vh;
+    text-align: center;
+    color: var(--hightlight);
+    padding: .3vh 0;
+    width: 100%;
+}
+#ProgressBar p.stagePassed{
+    color: var(--textColor);
+    background: var(--hightlight);
+}
+#onScreenButtons{
+    right: 0;
+    width: 20%;
+    height: 85vh;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    background: rgba(95, 95, 95, 0.329);
+}
+button{
+    width: 60%;
+    height: 12%;
+    color: var(--textColor);
+    font-size: 2.5vh;
+    margin: auto;
+    margin-top: 20%;
+    margin-bottom: 20%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .4s ease-in-out;
+    background: var(--mainColor);
+    
+}
+button:hover{
+    transform: translateY(-1vh);
+    background: var(--hightlight);
+    box-shadow: 0px 1vh #9292926c;
+}
+.detail {
+    width: 90%;
+    margin-left: 5%;
+    margin: 2vh auto;
+    border-radius: 10px;
+    padding: .5vh;
+    color: #11998e;
+}
+.detail h3{
+    margin: 0;
+    margin-left: 4%;
+    font-size: 2.2vh;
+    margin-bottom: 10px;
+}
+.detail p {
+    width: 90%;
+    margin: auto;
+    padding: 15px;
+    font-size: 2vh;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    transition: all 0.2 ease-in-out;
+    background: var(--hightlight);
+    color: black;
+    /* box-shadow: inset 3px 3px 10px 0 rgba(61, 61, 61, 0.554),
+    inset -3px -3px 10px 0 rgba(255, 255, 255, 0.274); */
+    box-shadow: inset 6px 6px 10px 0 rgb(0 0 0 / 20%), inset -6px -6px 10px 0 rgb(255 255 255 / 30%);
+}
+.detail textarea {
+    resize: none;
+    width: 90%;
+    height: 8vh;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 2vh;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    background: rgba(98, 98, 98, 0);
+    box-shadow: inset 6px 6px 10px 0 rgb(0 0 0 / 20%), inset -6px -6px 10px 0 rgb(255 255 255 / 30%);
+}
+
+#Log p,
+#AdditionalInfo p{
+    margin-top: 1%;
+}
+#AdditionalInfo button {
+    left: 35%;
+    width: 30%;
+    margin-top: 0;
+    color: var(--textColor);
+    background: var(--hightlight);
+    margin-bottom: 1%;
+    position: relative;
+}
+#AdditionalInfo button:hover {
+    color: var(--textColor);
+    background: var(--mainColor);
+    box-shadow: 0px 1vh #1a1a1a6c;
+}
+footer{
+    height: 1vh;
+}
+
+.button {
+    padding: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 100px;
+    transition: all .2s ease-in-out;
+    border: 2px solid var(--mainColor);
+    text-decoration: none;
+    background: var(--hightlight);
+    color: var(--textColor);
+    margin-top: 5vh;
+}

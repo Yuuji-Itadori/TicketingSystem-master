@@ -1,0 +1,44 @@
+﻿@{
+    @using TicketingSystem.Controllers;
+
+    ViewData[HomeController.TitleKey] = "Ticket Approval";
+    var unaprovedTickets = (IEnumerable<(Ticket, string)>)ViewData[HomeController.UnaprovedTicketsKey];
+}
+
+@section PageCSS {
+    <link rel="stylesheet" href="/css/TicketHandler.css" media="only screen and (min-width: 720px)" />
+}
+
+
+<section class="collapsibleContainer active">
+    <div class="headerBar">
+        <h1>Unapproved Tickets</h1>
+    </div>
+    <div class="sectionContent">
+        <table class="sortable">
+            <tr>
+                <th>Summary</th>
+                <th>Type</th>
+                <th>Client</th>
+                <th>Submission Date and Time</th>
+                <th>Status</th>
+                <th>Approve/Deny</th>
+            </tr>
+            @foreach ((Ticket ticket, string staffName) in unaprovedTickets)
+            {
+                <tr>
+                    <td>@(string.IsNullOrEmpty(ticket.Summary) ? "N/A" : ticket.Summary)</td>
+                    <td>@ticket.TextForType</td>
+                    <td>@(string.IsNullOrEmpty(staffName) ? "N/A" : staffName)</td>
+                    <td>@ticket.SubmissionDate.ToString("dddd, dd MMMM yyyy hh:mm tt")</td>
+                    <td>@ticket.TextForStatus</td>
+                    <td>
+                        <a asp-action="TicketDetails" asp-route-ticketId="@ticket.ID">
+                            <p class="button">+</p>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</section>

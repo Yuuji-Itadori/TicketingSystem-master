@@ -1,0 +1,77 @@
+﻿@{
+    @using TicketingSystem.Data;
+    @using TicketingSystem.Models;
+    @using TicketingSystem.Controllers;
+
+    var welcomeMessage = string.Empty;
+    var now = DateTime.Now;
+    if (now.Hour < 12) welcomeMessage = "Good Morning";
+    else if (now.Hour < 17 && now.Hour >= 12) welcomeMessage = "Good Afternoon";
+    else welcomeMessage = "Good Evening";
+
+    var data = new List<NavigationOption>();
+    switch ((Staff.Type)ViewData[HomeController.UserTypeKey])
+    {
+        case Staff.Type.Handler: data.AddRange(NavigationOption.Handler); break;
+        case Staff.Type.Manager: data.AddRange(NavigationOption.Manager); break;
+        default: data.AddRange(NavigationOption.General); break;
+    }
+    data.Add(new NavigationOption("Logout", "Logout"));
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewData[HomeController.TitleKey]</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<link rel="stylesheet" href="~/css/Master-Mobile.css">-->
+    <link rel="stylesheet" href="~/css/Master.css" media="only screen and (min-width: 720px)" />
+    @RenderSection("PageCSS", required: false)
+    @RenderSection("MobilePageCSS", required: false)
+    <link id="theme" rel="stylesheet" href="">
+    @RenderSection("BeforeLoadScripts", required: false)
+</head>
+    <body>
+        <section id="navigation-panel">
+            <div id="user-profile">
+                <img id="logo" alt="abc Bank logo" src="~/imgs/BankingLogo.png" />
+                <h1>@welcomeMessage</h1>
+                <h2>@ViewData[HomeController.UsernameKey]</h2>
+            </div>
+            <nav id="navigation-menu">
+                @foreach (var option in data)
+                {
+                    <a asp-action="@option.DestinationUrl" title="@option.TitleText">
+                        <h2>@option.HyperlinkText</h2>
+                    </a>
+                }
+            </nav>
+        </section>
+        <section id="container">
+            @RenderSection("OutOfContentExtra", required: false)
+            <div id="content">
+                @RenderBody()
+            </div>
+        </section>
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                abc Bank - TicketingSystem &copy; @DateTime.Now.Year
+            </div>
+            <div id="darkModeDiv">
+                <label id="darkModeLabel" for="darkModeToggle">Dark Mode</label>
+                <label class="switch">
+                    <input type="checkbox" id="darkMode">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script type="application/javascript" src="~/js/DarkMode.js"></script>
+        @RenderSection("Scripts", required: false)
+        @RenderSection("PageScripts", required: false)
+    </body>
+</html>

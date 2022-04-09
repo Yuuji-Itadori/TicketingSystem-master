@@ -1,0 +1,81 @@
+@{
+    @using TicketingSystem.Controllers;
+    ViewData[HomeController.TitleKey] = "Create New Ticket";
+
+    int specifiedTicketIndex = Convert.ToInt32(ViewData[HomeController.SelectedTicketTypeKey]);
+    var ticketTypes = (int[])Enum.GetValues(typeof(Ticket.Type));
+    string[] priorityTypeNames = Enum.GetNames(typeof(Ticket.Severity));
+
+    var services = (Service[])ViewData[HomeController.AllServicesKey];
+    var locations = (Location[])ViewData[HomeController.AllLocationsKey];
+}
+
+@section PageCSS {
+    <link rel="stylesheet" href="~/css/TicketCreator.css" media="only screen and (min-width: 720px)" />
+}
+
+@section PageScripts {
+    <script src="~/js/TicketCreator.js"></script>
+}
+
+@section OutOfContentExtra {
+    <header>Create Ticket</header>
+}
+
+
+@using (Html.BeginForm("TicketCreator", "Home", FormMethod.Post, new { @class = "ticketForm" }))
+{
+    <div class="InputField">
+        <label for="ticketType">Ticket Type</label>
+        <select id="ticketType" name="ticketTypeId" required>
+            @foreach (int typeId in ticketTypes)
+            {
+                if (typeId == specifiedTicketIndex)
+                { <option value="@typeId" selected="selected">@Ticket.GetTextForType((Ticket.Type)typeId)</option> }
+                else
+                { <option value="@typeId">@Ticket.GetTextForType((Ticket.Type)typeId)</option> }
+            }
+        </select>
+    </div>
+    <div id="severity" class="InputField">
+        <label for="priority">{'Severity' or 'Priority'}</label>
+        <select name="severityLevelId" required>
+            @for (int i = 1; i < priorityTypeNames.Length; i++)
+            {
+                if (i == (int)TicketingSystem.Models.Ticket.Severity.Medium)
+                { <option value="@i" selected="selected"> @priorityTypeNames[i]</option> }
+                else
+                { <option value="@i"> @priorityTypeNames[i]</option> }
+            }
+        </select>
+    </div>
+    <div id="location" class="InputField">
+        <label for="locationId">Location</label>
+        <select name="locationId" required>
+            <option value="0">Empty</option>
+            @foreach (Location location in locations)
+            { <option value="@location.ID">@location.Name</option> }
+        </select>
+    </div>
+    <div id="service" class="InputField">
+        <label for="serviceId">Service</label>
+        <select name="serviceId" required>
+            <option value="0">Empty</option>
+            @foreach (Service service in services)
+            { <option value="@service.ID">@service.Name</option> }
+        </select>
+    </div>
+    <div id="username" class="InputField">
+        <label for="username">Username</label>
+        <textarea id="username" name="username" rows="1" cols="50"></textarea>
+    </div>
+    <div id="summary" class="InputField">
+        <label for="summary">Summary</label>
+        <textarea id="summary" name="summary" rows="2" cols="50"></textarea>
+    </div>
+    <div id="detail" class="InputField">
+        <label for="details">{'Details' or 'Reason'}</label>
+        <textarea id="details" name="details" rows="8" cols="50"></textarea>
+    </div>
+    <button type="submit">Create Ticket</button>
+}

@@ -1,0 +1,67 @@
+﻿@{
+    @using TicketingSystem.Controllers;
+
+    ViewData[HomeController.TitleKey] = "Ticket Handler";
+    var UnapprovedTickets = (IEnumerable<(Ticket ticket, string primaryHandlerName, string locationName, string serviceName)>)ViewData[HomeController.UnaprovedTicketsKey];
+    var InProgress = (List<(Ticket, string, string, string)>)ViewData[HomeController.OpenTicketsKey];
+    InProgress.AddRange((List<(Ticket, string, string, string)>)ViewData[HomeController.AssignedTicketsKey]);
+    InProgress.AddRange((List<(Ticket, string, string, string)>)ViewData[HomeController.RespondedTicketsKey]);
+    var ResolvedTickets = (IEnumerable<(Ticket ticket, string primaryHandlerName, string locationName, string serviceName)>)ViewData[HomeController.ResolvedTicketsKey];
+    var activeTab = (int?)ViewData[HomeController.activeTabKey];
+    if (activeTab != null)
+    {
+        if (activeTab == 4) activeTab = 3;
+        else if (activeTab > 0) activeTab = 2;
+    }
+
+    IEnumerable<(Ticket ticket, string primaryHandlerName, string locationName, string serviceName)>[] enumerables = { UnapprovedTickets, InProgress, ResolvedTickets };
+    string[] headers = { "Unapproved", "InProgress", "Resolved" };
+}
+
+@section scripts {
+    <script src="~/js/CollapsibleContainers.js"></script>
+}
+
+@section PageCSS {
+    <link rel="stylesheet" href="/css/TicketHandler.css" media="only screen and (min-width: 720px)"/>
+}
+
+@for (int i = 0; i < headers.Length; i++)
+{
+    <section class="collapsibleContainer@(activeTab != null ? (activeTab == i ? " active" : string.Empty) : i == 0 ? " active" : string.Empty)">
+        <div class="headerBar">
+            <h1>@headers[i]</h1>
+        </div>
+        <div class="sectionContent">
+            <table class="sortable">
+                <tr>
+                    <th>Summary</th>
+                    <th>Type</th>
+                    <th>Primary Handler</th>
+                    <th>Submission Date and Time</th>
+                    <th>Status</th>
+                    <th>Location</th>
+                    <th>Service</th>
+                    <th></th>
+                </tr>
+                @foreach ((Ticket ticket, string primaryHandlerName, string locationName, string serviceName) in enumerables[i])
+                {
+                    <tr>
+                        <td>@(string.IsNullOrEmpty(ticket.Summary) ? "N/A" : ticket.Summary)</td>
+                        <td>@ticket.TextForType</td>
+                        <td>@primaryHandlerName</td>
+                        <td>@ticket.SubmissionDate.ToString("dddd, dd MMMM yyyy hh:mm tt")</td>
+                        <td>@ticket.TextForStatus</td>
+                        <td>@(!string.IsNullOrEmpty(locationName) ? locationName : "N/A")</td>
+                        <td>@(!string.IsNullOrEmpty(serviceName) ? serviceName : "N/A")</td>
+                        <td>
+                            <a asp-action="TicketViewer" asp-route-ticketId="@ticket.ID">
+                                <p class="button">+</p>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </section>
+}
